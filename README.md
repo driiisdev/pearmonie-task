@@ -22,7 +22,7 @@ This project is a Node.js Express-based API for an eCommerce platform.
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/your-repo-name.git
+   git clone https://github.com/driiisdev/pearmonie-task
    cd your-repo-name
    ```
 
