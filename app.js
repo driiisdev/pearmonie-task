@@ -12,6 +12,8 @@ dotenv.config();
 
 const app = express();
 
+const baseUrl = process.env.BASE_URL || 'http://localhost:5000';
+
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -22,7 +24,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:5000',
+        url: baseUrl,
       },
     ],
     components: {
@@ -42,6 +44,7 @@ const swaggerOptions = {
   },
   apis: ['./routes/v1/*.js'],
 };
+
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use(
@@ -51,6 +54,7 @@ app.use(
       methods: "GET,PUT,PATCH,POST,DELETE",
   })
 );
+
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
@@ -78,7 +82,7 @@ async function startServer() {
     await connectDB();
     
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on ${baseUrl}`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
