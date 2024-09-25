@@ -1,4 +1,4 @@
-# eCommerce API
+#  Pearmonie eCommerce API
 
 This project is a Node.js Express-based API for an eCommerce platform.
 

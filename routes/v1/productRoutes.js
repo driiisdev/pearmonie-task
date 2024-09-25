@@ -44,7 +44,6 @@ router.get('/products', productController.getAllProducts);
  *         content:
  *           application/json:
  *             schema:
-  *             schema:
  *               type: object
  *               properties:
  *                 name:
@@ -119,8 +118,6 @@ router.post('/product', authMiddleware.authenticate, authMiddleware.rbac(['admin
  * @swagger
  * /api/v1/product/{id}:
  *   put:
- *     security:
- *       - bearerAuth: []
  *     summary: Update a product by ID
  *     tags: [Products]
  *     security:
@@ -160,8 +157,6 @@ router.put('/product:id', authMiddleware.authenticate, authMiddleware.rbac(['adm
  *       - bearerAuth: []
  *     summary: Delete a product by ID
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
