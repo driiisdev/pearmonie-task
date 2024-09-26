@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('createdAt', 'updatedAt', {
+    await queryInterface.createTable('roles', {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('createdAt', 'updatedAt');
+    await queryInterface.dropTable('roles');
   }
 };

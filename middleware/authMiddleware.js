@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const Users = require('../models/Users');
+const {Users} = require('../models');
 
 require("dotenv").config();
 
@@ -40,7 +40,7 @@ exports.authenticate = async (req, res, next) => {
 exports.rbac = (allowedRoles) => {
   return async (req, res, next) => {
     try {
-      const userRoles = await req.user.getRoles();
+      const userRoles = await req.users.getRoles();
       const hasPermission = userRoles.some(role => allowedRoles.includes(role.name));
       if (!hasPermission) {
         return res.status(403).json({ message: 'Access denied' });
