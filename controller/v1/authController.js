@@ -23,6 +23,7 @@ exports.login = async (req, res) => {
           email: data.user.email,
         },
         accessToken: data.accessToken,
+        refreshToken: data.refreshToken
       },
     });    
   } catch (error) {

@@ -48,11 +48,8 @@ const login = async (email, password) => {
 
 const refreshToken = async (refreshToken) => {
   try {
-    // Verify the refresh token
     const decoded = jwt.verify(refreshToken, JWT_SECRET);
-    
-    // Check if the token exists and is not blacklisted
-    const tokenDoc = await Token.findOne({
+    const tokenDoc = await Tokens.findOne({
       where: {
         token: refreshToken,
         type: 'refresh',
@@ -60,27 +57,20 @@ const refreshToken = async (refreshToken) => {
         expires: { [Op.gt]: new Date() }
       }
     });
-
     if (!tokenDoc) {
       throw new Error('Refresh token not found or has been blacklisted');
     }
-
     const user = await Users.findByPk(decoded.id);
     if (!user) {
       throw new Error('User not found');
     }
-
-    // Generate new access token
     const newAccessToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-
-    // Store new access token
-    await Token.create({
+    await Tokens.create({
       userId: user.id,
       token: newAccessToken,
       type: 'access',
-      expires: new Date(Date.now() + 60 * 60 * 1000), // 1 hour from now
+      expires: new Date(Date.now() + 60 * 60 * 1000),
     });
-
     return { accessToken: newAccessToken };
   } catch (error) {
     throw error;
