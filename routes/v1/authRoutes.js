@@ -46,7 +46,7 @@ const router = express.Router();
  *       400:
  *         description: Bad request (validation error)
  */
-router.post('/register', authController.register);
+router.post('/register', authMiddleware.validateRegistration, authMiddleware.assignUserRole, authController.register);
 
 /**
  * @swagger

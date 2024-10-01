@@ -12,8 +12,8 @@ async function seedAdminUser() {
       });
       console.log(adminRole.isNewRecord ? "Admin role created" : "Admin role found");
 
-      const adminUsername = 'eriiisdev';
-      const adminEmail = 'odev@example.com';
+      const adminUsername = 'driiisdev';
+      const adminEmail = 'dev@example.com';
       const adminPassword = 'driiis@admin01';
 
       // Find or create Admin user

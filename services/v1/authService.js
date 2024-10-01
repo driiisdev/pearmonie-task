@@ -1,16 +1,16 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
-const {Users, Tokens, Roles} = require('../../models');
+const {Users, Tokens, Roles, user_roles} = require('../../models');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET; 
 
-const register = async (username, email, password) => {
+const register = async (username, email, password, userRoleId) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await Users.create({ username, email, password: hashedPassword });
-  const userRole = await Roles.findOne({ where: { name: 'User' } });
-  await user.addRole(userRole);
+
+  await user_roles.create({ userId: user.id, roleId: userRoleId });
 
   return { id: user.id, username: user.username, email: user.email };
 };

@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const {Users} = require('../models');
+const {Users, Roles, user_roles} = require('../models');
+const { defaults } = require('pg');
 
 require("dotenv").config();
 
@@ -18,6 +19,16 @@ exports.validateRegistration = [
     next();
   }
 ];
+
+exports.assignUserRole = async (req, res, next) => {
+  try {
+    const [userRole] = await Roles.findOrCreate({ where: { name: 'User' }, defaults: {description: 'User role'} });
+    req.userRoleId = userRole.id;
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Error assigning user role' });
+  }
+};
 
 exports.authenticate = async (req, res, next) => {
   try {
